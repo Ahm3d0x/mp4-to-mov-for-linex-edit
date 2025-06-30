@@ -164,7 +164,4 @@ This project is licensed under the MIT License - see the [LICENSE file](https://
   * Special thanks to the [FFmpeg](https://ffmpeg.org/) project for powerful video processing.
   * Inspired by the need for better video conversion tools on Linux.
 
-<!-- end list -->
 
-```
-```
