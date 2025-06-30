@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide: MP4 to MOV Video Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 
+        Chosen Palette: Calm Harmony Neutrals
+        Application Structure Plan: The SPA is structured with clear tabbed navigation ("Overview", "Features", "Installation & Usage", "Output & Dependencies", "Contributing & License", "About Developer"). This breaks down the extensive README content into manageable, theme-based sections, improving discoverability and reducing cognitive load compared to a single long-scrolling page. The "Features" section now visually highlights the new quality presets, and key sections like "Installation & Usage" are logically grouped to provide a step-by-step user journey. This design prioritizes user understanding and ease of access to specific information without overwhelming them.
+        Visualization & Content Choices:
+        - Report Info: "Application Purpose" -> Goal: Inform -> Viz/Presentation: Introductory text block -> Interaction: None -> Justification: Provides immediate context.
+        - Report Info: "Key Features" & "Multiple Quality Presets" -> Goal: Inform/Compare -> Viz/Presentation: Styled list with Unicode icons; specific section for Quality Presets with descriptive text -> Interaction: None, but clear visual distinction -> Justification: Lists are effective for summarizing features. Detailing quality presets clearly explains this critical new functionality.
+        - Report Info: "Project Architecture" (from previous report) -> Goal: Organize/Relationships -> Viz/Presentation: Interactive diagram built with HTML/CSS Flexbox -> Interaction: Click on file elements to display detailed descriptions -> Justification: Transforms file list into a visual map of architecture, showing connections between main/renderer processes. Library/Method: Vanilla JS + Tailwind CSS.
+        - Report Info: "How It Works" (from previous report) -> Goal: Change/Process -> Viz/Presentation: Vertical timeline with interactive steps -> Interaction: Hover highlights -> Justification: Intuitive way to explain a process flow step-by-step.
+        - Report Info: "Installation", "Usage", "Output", "Dependencies", "Contributing", "License", "About the Developer" -> Goal: Inform/Guide -> Viz/Presentation: Structured text blocks with headings and bullet points -> Interaction: None -> Justification: These sections are primarily informational guides where clear, well-formatted text is most effective.
+        - Logo: Goal: Identity/Brand -> Viz/Presentation: HTML/CSS drawing using basic shapes and text, enhanced with a sparkle emoji for AI -> Interaction: Subtle pulse animation for AI sparkle -> Justification: Visually represents the core function (MP4 to MOV) and highlights the AI integration, fitting the modern aesthetic.
+        - Screenshot: Goal: Visual Overview -> Viz/Presentation: Image -> Interaction: None -> Justification: Provides a direct visual reference of the application's UI, helping users immediately recognize the app.
+        CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Warm Neutral Background */
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 2.5rem;
+
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tab.active {
+            border-color: #3b82f6; /* Accent Color */
+            color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        /* Styles for the Architecture Diagram */
+        .arch-diagram .process-col {
+            border: 2px solid #e5e7eb;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .arch-diagram .file-box {
+            border: 1px solid #d1d5db;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: #f9fafb;
+        }
+        .arch-diagram .file-box:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .arch-diagram .file-box.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .arch-diagram .arrow-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 1rem;
+        }
+        .arch-diagram .arrow::after {
+            content: '→';
+            font-size: 2.5rem;
+            color: #9ca3af;
+        }
+        /* Styles for the Workflow Timeline */
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+            padding-left: 2.5rem;
+            border-left: 2px solid #e5e7eb;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.7rem;
+            top: 0;
+            height: 1.25rem;
+            width: 1.25rem;
+            background-color: #ffffff;
+            border: 2px solid #3b82f6;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: #3b82f6;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        .code-block {
+            background-color: #e2e8f0; /* Light gray for code blocks */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #374151;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-12 lg:max-w-6xl">
+        <header class="text-center mb-10">
+            <!-- Logo Section -->
+            <div class="flex items-center justify-center p-6 bg-white rounded-xl shadow-lg border border-gray-200 mb-6">
+                <div class="flex items-center space-x-8">
+                    <!-- Input File (MP4) -->
+                    <div class="flex items-center justify-center w-16 h-16 bg-blue-600 rounded-xl shadow-md">
+                        <span class="text-white text-2xl  font-bold">MP4</span>
+                    </div>
+
+                    <!-- Transformation Arrow -->
+                    <span class="text-6xl text-blue-500 font-light leading-none">→</span>
+
+                    <!-- Output File (MOV) -->
+                    <div class="relative flex items-center justify-center w-16 h-16 bg-green-600 rounded-xl shadow-md">
+                        <span class="text-white text-2xl font-bold">MOV</span>
+                        <!-- AI Sparkle -->
+                        <span class="absolute -top-3 -right-3 text-yellow-400 text-4xl transform rotate-12 animate-pulse">✨</span>
+                    </div>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Video Converter Application</h1>
+            <p class="mt-2 text-lg text-gray-600">An Interactive Technical Report</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="flex flex-wrap justify-center border-b border-gray-200 mb-8">
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200 active" data-tab="overview">Overview</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="features">Features</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="architecture">Architecture</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="workflow">Workflow</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="installation">Installation & Usage</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="output">Output & Dependencies</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="contributing">Contributing & License</button>
+            <button class="tab py-4 px-3 sm:px-6 text-base sm:text-lg font-medium text-gray-500 border-b-2 border-transparent hover:border-gray-300 hover:text-gray-700 transition-colors duration-200" data-tab="about">About Developer</button>
+        </nav>
+
+        <!-- Content Sections -->
+        <main>
+            <!-- Overview Section -->
+            <section id="overview" class="content-section active">
+                 <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">Application Purpose</h2>
+                    <p class="text-gray-700 leading-relaxed text-lg mb-6">
+                        The MP4 to MOV Video Converter is a powerful and user-friendly desktop application built with Electron.js for converting MP4 video files into the professional MOV format using the Apple ProRes codec. It is specifically designed for video editors and content creators who need high-quality video conversion on Linux systems. This tool aims to provide a simple and efficient way to prepare video assets for professional editing workflows in software like DaVinci Resolve.
+                    </p>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Application Screenshot</h3>
+                    <div class="flex justify-center mb-6">
+                        <img src="https://raw.githubusercontent.com/Ahm3d0x/mp4-to-mov-for-linex-edit/main/assets/Screenshot%20from%202025-06-30%2012-26-30.png" 
+                             alt="Screenshot of the MP4 to MOV Video Converter Application" 
+                             class="w-full max-w-xl mx-auto rounded-lg shadow-md border border-gray-200"
+                             onerror="this.onerror=null;this.src='https://placehold.co/800x450/e0e0e0/333333?text=Screenshot+Unavailable';"
+                        >
+                    </div>
+                    <p class="text-gray-600 text-center text-sm italic">
+                        A visual overview of the application's user interface, highlighting its clean design and interactive elements.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Key Features Section -->
+            <section id="features" class="content-section">
+                <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800">Key Features</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">🔄</span><div><strong class="font-semibold text-gray-900">High-Quality Conversion:</strong> Convert MP4 videos to MOV format with ProRes codec and uncompressed audio.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">⚙️</span><div><strong class="font-semibold text-gray-900">Multiple Quality Presets:</strong> Choose from different ProRes quality settings to balance file size and visual fidelity.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">📦</span><div><strong class="font-semibold text-gray-900">Batch Processing:</strong> Convert multiple files or entire folders at once for efficient workflows.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">🖱️</span><div><strong class="font-semibold text-gray-900">Intuitive Interface:</strong> Simple drag-and-drop functionality makes conversion quick and easy.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">🖥️</span><div><strong class="font-semibold text-gray-900">Cross-Platform:</strong> While primarily designed for Linux, it leverages Electron for potential compatibility across other desktop platforms.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">⚡</span><div><strong class="font-semibold text-gray-900">Native Performance:</strong> Built with Electron to deliver optimal performance and a native feel.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">💡</span><div><strong class="font-semibold text-gray-900">Intelligent Video Description Generator (Gemini AI):</strong> Post-conversion, generate creative descriptions and relevant hashtags for your videos.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-2xl mr-4">📚</span><div><strong class="font-semibold text-gray-900">Smart Conversion Tips (Gemini AI):</strong> Get quick, helpful tips on ProRes best practices and DaVinci Resolve workflows.</div></li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold mt-8 mb-4 text-gray-800">Quality Presets</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">The application offers three quality presets for ProRes conversion:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="text-blue-500 text-xl mr-3">⭐</span><div><strong class="font-semibold text-gray-900">High:</strong> Best quality (ProRes 4444). Ideal for scenarios where maximum fidelity and color depth are critical, resulting in larger file sizes.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-xl mr-3">✨</span><div><strong class="font-semibold text-gray-900">Medium:</strong> Balanced quality and file size (ProRes 422 HQ). A great all-rounder for most professional editing tasks.</div></li>
+                        <li class="flex items-start"><span class="text-blue-500 text-xl mr-3">💾</span><div><strong class="font-semibold text-gray-900">Low:</strong> Smaller file size (ProRes Proxy). Suitable for offline editing or situations where storage space is a concern, while still offering better performance than compressed formats.</div></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Architecture Section -->
+            <section id="architecture" class="content-section">
+                <div class="text-center mb-8">
+                     <h2 class="text-3xl font-bold mb-2 text-gray-800">Project Architecture</h2>
+                     <p class="text-lg text-gray-600">Click on a file component below to see its role in the application.</p>
+                </div>
+                <div class="arch-diagram grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                    <!-- Renderer Process Column -->
+                    <div class="process-col">
+                        <h3 class="text-xl font-semibold text-center mb-4">Renderer Process</h3>
+                        <div class="file-box" data-file="renderer.js">renderer.js</div>
+                        <div class="file-box" data-file="index.html">index.html</div>
+                        <div class="file-box" data-file="style.css">style.css</div>
+                    </div>
+
+                    <!-- Bridge Column -->
+                    <div class="arrow-container text-center">
+                        <h3 class="text-xl font-semibold mb-2">IPC Bridge</h3>
+                        <div class="arrow"></div>
+                        <div class="file-box" data-file="preload.js">preload.js</div>
+                        <div class="arrow" style="transform: rotate(180deg);"></div>
+                    </div>
+                    
+                    <!-- Main Process Column -->
+                    <div class="process-col">
+                        <h3 class="text-xl font-semibold text-center mb-4">Main Process (Node.js)</h3>
+                        <div class="file-box" data-file="main.js">main.js</div>
+                        <div class="file-box" data-file="package.json">package.json</div>
+                    </div>
+                </div>
+
+                <!-- Description Panel -->
+                <div id="file-description-panel" class="mt-8 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-sm transition-opacity duration-300 opacity-0">
+                    <h3 id="desc-title" class="text-2xl font-bold mb-2 text-gray-800">Select a file</h3>
+                    <p id="desc-content" class="text-gray-700 leading-relaxed">Click on a file in the diagram above to learn more about its function.</p>
+                </div>
+            </section>
+
+            <!-- Workflow Section -->
+            <section id="workflow" class="content-section">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold mb-2 text-gray-800">Application Workflow</h2>
+                        <p class="text-lg text-gray-600">A step-by-step look at how the application processes a conversion request.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="timeline-item">
+                            <div class="timeline-dot">1</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-1">Startup</h3>
+                            <p class="text-gray-600">When launched, the main process (`main.js`) creates the Electron window and loads `index.html`, which forms the user interface.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">2</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-1">User Interaction</h3>
+                            <p class="text-gray-600">The user interacts with `index.html`, either by clicking buttons or dragging files onto the drop zone. These actions are handled by `renderer.js`.</p>
+                        </div>
+                         <div class="timeline-item">
+                            <div class="timeline-dot">3</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-1">Sending Conversion Request</h3>
+                            <p class="text-gray-600">`renderer.js` calls a function on the `electronAPI` exposed by `preload.js`. This script acts as a secure bridge, forwarding the request to the main process via an IPC (Inter-Process Communication) channel.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">4</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-1">Processing in Main Process</h3>
+                            <p class="text-gray-600">`main.js` receives the request. It uses Node.js's `child_process` module to execute FFmpeg with the correct arguments for the input and output files, including the selected quality preset.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot">5</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-1">Status Update & AI Features</h3>
+                            <p class="text-gray-600">Upon completion or error, the main process sends the result back to the renderer. If successful, the user can trigger AI features like generating video descriptions or getting conversion tips.</p>
+                        </div>
+                         <div class="timeline-item">
+                            <div class="timeline-dot">6</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-1">Secure Path Management</h3>
+                            <p class="text-gray-600">To maintain security, the renderer process never directly accesses the file system. All path operations are requested via IPC and handled securely by the main process using Node.js modules.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Installation & Usage Section -->
+            <section id="installation" class="content-section">
+                <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">Installation & Usage</h2>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Prerequisites</h3>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700 mb-6">
+                        <li>Node.js (v14 or higher)</li>
+                        <li>npm (v6 or higher) or Yarn</li>
+                        <li>FFmpeg (will be installed automatically as a dependency)</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Installing the Application</h3>
+                    <h4 class="text-xl font-semibold mb-2 text-gray-700">From Pre-built Package (Recommended)</h4>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                        <li>Download the latest `.deb` package from the releases page (GitHub).</li>
+                        <li>Install using your package manager:</li>
+                    </ul>
+                    <div class="code-block mb-6">
+                        <pre><code>sudo dpkg -i mp4-to-mov-converter_*.deb
+sudo apt-get install -f # Install any missing dependencies</code></pre>
+                    </div>
+
+                    <h4 class="text-xl font-semibold mb-2 text-gray-700">From Source</h4>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                        <li>Clone the repository:</li>
+                    </ul>
+                    <div class="code-block mb-2">
+                        <pre><code>git clone https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit.git
+cd mp4-to-mov-for-linex-edit</code></pre>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                        <li>Install dependencies:</li>
+                    </ul>
+                    <div class="code-block mb-2">
+                        <pre><code>npm install</code></pre>
+                    </div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                        <li>Start the application:</li>
+                    </ul>
+                    <div class="code-block mb-6">
+                        <pre><code>npm start</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Building from Source</h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">To build the application for your platform:</p>
+                    <div class="code-block mb-2">
+                        <pre><code># Install build dependencies
+npm install</code></pre>
+                    </div>
+                    <div class="code-block mb-2">
+                        <pre><code># Build the application
+npm run dist</code></pre>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed mb-6">The built package will be in the 'dist' directory.</p>
+
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Usage</h3>
+                    <ul class="list-disc list-inside space-y-3 text-gray-700 mb-4">
+                        <li><strong class="font-semibold text-gray-900">Select Files/Folders:</strong>
+                            <ul class="list-circle list-inside ml-5 mt-1 space-y-1">
+                                <li>Click "Select a Video File" to choose individual MP4 files.</li>
+                                <li>Click "Select a Folder" to convert all MP4 files in a directory.</li>
+                                <li>Or simply drag and drop files/folders into the application window.</li>
+                            </ul>
+                        </li>
+                        <li><strong class="font-semibold text-gray-900">Choose Output Quality:</strong>
+                            <ul class="list-circle list-inside ml-5 mt-1 space-y-1">
+                                <li>Select your preferred quality preset (High, Medium, or Low).</li>
+                                <li><strong class="font-medium text-gray-800">High:</strong> Best quality (ProRes 4444)</li>
+                                <li><strong class="font-medium text-gray-800">Medium:</strong> Balanced quality and size (ProRes 422 HQ)</li>
+                                <li><strong class="font-medium text-gray-800">Low:</strong> Smaller file size (ProRes Proxy)</li>
+                            </ul>
+                        </li>
+                        <li><strong class="font-semibold text-gray-900">Select Output Directory:</strong>
+                            <ul class="list-circle list-inside ml-5 mt-1 space-y-1">
+                                <li>Click "Select Output Folder" to choose where to save the converted files.</li>
+                                <li>If no output folder is selected, files will be saved in the same directory as the source.</li>
+                            </ul>
+                        </li>
+                        <li><strong class="font-semibold text-gray-900">Start Conversion:</strong>
+                            <ul class="list-circle list-inside ml-5 mt-1 space-y-1">
+                                <li>The conversion begins automatically once files/folders are selected or dropped.</li>
+                                <li>Progress and status messages will be shown in the application's status area.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Output & Dependencies Section -->
+            <section id="output" class="content-section">
+                <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">Output Details</h2>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+                        <li>Converted files will be saved with `_high`, `_medium`, or `_low` suffix based on the selected quality (e.g., `my_video_high.mov`).</li>
+                        <li>Original MP4 files remain unchanged.</li>
+                        <li>Conversion logs are displayed in the application console (for debugging/detailed info).</li>
+                    </ul>
+
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">Dependencies</h2>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li><strong class="font-semibold text-gray-900">Electron:</strong> The framework for building cross-platform desktop apps with web technologies.</li>
+                        <li><strong class="font-semibold text-gray-900">ffmpeg-static:</strong> Provides a static FFmpeg binary, bundled with the application, ensuring it works out-of-the-box.</li>
+                        <li><strong class="font-semibold text-gray-900">Node.js native modules:</strong> `fs` (File System), `path` (Path manipulation), `child_process` (Spawning processes like FFmpeg) for backend operations.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Contributing & License Section -->
+            <section id="contributing" class="content-section">
+                <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">Contributing</h2>
+                    <p class="text-gray-700 leading-relaxed mb-4">Contributions are welcome! Please feel free to submit a Pull Request to the <a href="https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit" target="_blank" class="text-blue-600 hover:underline">GitHub repository</a>.</p>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Contribution Steps</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+                        <li>Fork the repository</li>
+                        <li>Create your feature branch (<span class="code-block inline-block py-0.5 px-1 rounded">git checkout -b feature/AmazingFeature</span>)</li>
+                        <li>Commit your changes (<span class="code-block inline-block py-0.5 px-1 rounded">git commit -m 'Add some AmazingFeature'</span>)</li>
+                        <li>Push to the branch (<span class="code-block inline-block py-0.5 px-1 rounded">git push origin feature/AmazingFeature</span>)</li>
+                        <li>Open a Pull Request</li>
+                    </ul>
+
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">License</h2>
+                    <p class="text-gray-700 leading-relaxed">This project is licensed under the MIT License - see the <a href="https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit/blob/main/LICENSE" target="_blank" class="text-blue-600 hover:underline">LICENSE</a> file for details.</p>
+                </div>
+            </section>
+
+            <!-- About Developer Section -->
+            <section id="about" class="content-section">
+                <div class="bg-white p-8 rounded-lg shadow-sm max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">About the Developer</h2>
+                    <div class="text-gray-700 leading-relaxed space-y-2">
+                        <p class="flex items-center"><span class="text-xl mr-3">👋</span><strong class="font-semibold text-gray-900">Name:</strong> Ahmed Mohamed Attia Mohamed</p>
+                        <p class="flex items-center"><span class="text-xl mr-3">🎓</span><strong class="font-semibold text-gray-900">Education:</strong> Student at Faculty of Engineering, Zagazig University</p>
+                        <p class="flex items-center"><span class="text-xl mr-3">📚</span><strong class="font-semibold text-gray-900">Major:</strong> Communications and Electronics Engineering</p>
+                        <p class="flex items-center"><span class="text-xl mr-3">📍</span><strong class="font-semibold text-gray-900">Location:</strong> From Kafr Saqr, El-Sharqia, Egypt</p>
+                        <p class="flex items-center"><span class="text-xl mr-3">📧</span><strong class="font-semibold text-gray-900">Email:</strong> <a href="mailto:ahm3d.m.attia@gmail.com" class="text-blue-600 hover:underline">ahm3d.m.attia@gmail.com</a></p>
+                        <p class="flex items-center"><span class="text-xl mr-3">🔗</span><strong class="font-semibold text-gray-900">GitHub:</strong> <a href="https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit" target="_blank" class="text-blue-600 hover:underline">Ahm3d0x/mp4-to-mov-for-linex-edit</a></p>
+                        <p class="flex items-center"><span class="text-xl mr-3">🔗</span><strong class="font-semibold text-gray-900">LinkedIn:</strong> <a href="https://www.linkedin.com/in/ahmed-m-attia-757aa6292" target="_blank" class="text-blue-600 hover:underline">linkedin.com/in/ahmed-m-attia-757aa6292</a></p>
+                    </div>
+                    <h3 class="text-2xl font-bold mt-8 mb-3 text-gray-800">Acknowledgments</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Thanks to the Electron.js team for the amazing framework.</li>
+                        <li>Special thanks to the FFmpeg project for powerful video processing.</li>
+                        <li>Inspired by the need for better video conversion tools on Linux.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab');
+            const contentSections = document.querySelectorAll('.content-section');
+            const fileBoxes = document.querySelectorAll('.file-box');
+            const descTitle = document.getElementById('desc-title');
+            const descContent = document.getElementById('desc-content');
+            const descPanel = document.getElementById('file-description-panel');
+
+            const fileDescriptions = {
+                'renderer.js': {
+                    title: 'renderer.js (Renderer Logic)',
+                    content: 'Contains the front-end logic and user interaction. Manages UI events (button clicks, drag-and-drop) and uses window.electronAPI to communicate with the main process. It dispatches conversion requests and updates the UI with status messages.'
+                },
+                'index.html': {
+                    title: 'index.html (User Interface)',
+                    content: 'Defines the graphical user interface structure of the application. It includes the drag-and-drop area, buttons for user actions, and elements to display status messages. It links the necessary CSS and JavaScript files.'
+                },
+                'style.css': {
+                    title: 'style.css (Styles)',
+                    content: 'Applies a clean, modern, dark theme to the application. It includes styles for all UI elements, ensuring an aesthetically pleasing and consistent user experience.'
+                },
+                'preload.js': {
+                    title: 'preload.js (Preload Script)',
+                    content: 'Acts as a secure bridge between the main and renderer processes. It uses contextBridge to expose a safe, limited API to the renderer, allowing it to invoke main process functions (like file dialogs and conversions) without exposing full Node.js capabilities.'
+                },
+                'main.js': {
+                    title: 'main.js (Main Process)',
+                    content: 'The primary entry point for the Electron application. It creates the browser window, loads the app, and listens for and handles all backend tasks like file operations and executing the FFmpeg conversion process via IPC messages from the renderer.'
+                },
+                'package.json': {
+                    title: 'package.json (Project Metadata)',
+                    content: 'Defines project metadata, scripts (like `npm start`), and manages dependencies. It specifies `electron` as a dev dependency and `ffmpeg-static` as a regular dependency needed for the conversion.'
+                }
+            };
+
+            // Tab navigation logic
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === target) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Architecture diagram logic
+            fileBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    const fileName = box.getAttribute('data-file');
+                    const description = fileDescriptions[fileName];
+
+                    // Remove selected state from all boxes
+                    fileBoxes.forEach(b => b.classList.remove('selected'));
+                    // Add selected state to the clicked box
+                    box.classList.add('selected');
+
+                    if (description) {
+                        descTitle.textContent = description.title;
+                        descContent.textContent = description.content;
+                        descPanel.classList.remove('opacity-0');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
