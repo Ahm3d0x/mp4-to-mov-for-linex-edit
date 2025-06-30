@@ -1,5 +1,5 @@
 // Import necessary modules from Electron
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
 // Import Node.js path module for handling file paths
 const path = require('path');
 // Import Node.js child_process for executing FFmpeg commands
@@ -12,23 +12,20 @@ const fs = require('fs/promises'); // Using promises API for async operations
 /**
  * Creates the main application window.
  */
+Menu.setApplicationMenu(null);
 function createWindow() {
   // Create a new browser window with specific dimensions and properties
   const mainWindow = new BrowserWindow({
     width: 800, // Fixed width
     height: 900, // Fixed height
-    title: 'mp4 to mov Video Converter', // New title
-    resizable: false, // Disable resizing to maintain a consistent UI
+    title: 'MP4 to MOV Video Converter',
     webPreferences: {
-      // Set up the preload script for secure communication between main and renderer processes
-      preload: path.join(__dirname, 'preload.js'),
-      // It's generally safer to have nodeIntegration to false and contextIsolation to true
-      // and expose necessary APIs via preload script.
       nodeIntegration: false,
       contextIsolation: true,
-      sandbox: true
+      sandbox: true,
+      preload: path.join(__dirname, 'preload.js')
     },
-    icon: path.join(__dirname, 'assets/icon.png'),
+    icon: path.resolve(__dirname, 'assets/icon.png'),
     show: false
   });
 
@@ -43,6 +40,28 @@ function createWindow() {
   // Open the DevTools. This is useful for debugging.
   // mainWindow.webContents.openDevTools();
 }
+
+// Window control handlers
+ipcMain.on('window:minimize', (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  if (window) window.minimize();
+});
+
+ipcMain.on('window:maximize', (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  if (window) {
+    if (window.isMaximized()) {
+      window.unmaximize();
+    } else {
+      window.maximize();
+    }
+  }
+});
+
+ipcMain.on('window:close', (event) => {
+  const window = BrowserWindow.fromWebContents(event.sender);
+  if (window) window.close();
+});
 
 // Event listener: App is ready to create browser windows
 app.whenReady().then(() => {

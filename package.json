@@ -36,15 +36,14 @@
       "linux": {
         "target": ["deb"],
         "icon": "assets/icon.png",
+        "desktop": {
+          "Name": "MP4 to MOV Video Converter",
+          "Comment": "Convert videos to high-quality ProRes format",
+          "Categories": "Video;AudioVideo;Utility;"
+        },
         "category": "Video",
         "maintainer": "Video Pro Team <support@videopro.com>",
-        "synopsis": "Professional video converter with ProRes support",
-        "desktop": {
-          "Name": "Video Pro Converter",
-          "Comment": "Convert videos to high-quality ProRes format",
-          "Categories": "Video;AudioVideo;Utility;",
-          "Keywords": "video;converter;prores;mov;mp4;"
-        }
+        "synopsis": "Professional video converter with ProRes support"
       },
       "deb": {
         "depends": ["ffmpeg"],

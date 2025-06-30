@@ -5,16 +5,22 @@
     box-sizing: border-box;
 }
 
+/* Window frame styles */
+body {
+    padding: 20px 0 0 0; /* Add some padding at the top for the window controls */
+}
+
 /* Body styling: dark theme, centered content */
 body {
     font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
     background-color: #282c34; /* Dark background color */
     color: #abb2bf; /* Light text color for contrast */
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    min-height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
     overflow: hidden; /* Prevent scrolling if content overflows */
+    padding: 42px 0 0 0; /* Add padding for title bar */
 }
 
 /* Main container styling */
@@ -61,11 +67,6 @@ h1 {
     transform: scale(1.02); /* Slightly enlarge */
 }
 
-/* Separator text styling */
-.separator {
-    color: #5c6370; /* Muted color for separator */
-    font-size: 1em;
-}
 
 /* Button styling */
 button {

@@ -7,6 +7,8 @@ const outputFolderPathSpan = document.getElementById('output-folder-path');
 const statusMessage = document.getElementById('status-message');
 const qualitySelect = document.getElementById('quality-select');
 
+// Window controls are now handled by the default window frame
+
 let currentOutputDirectory = ''; // Variable to store the selected output directory path
 
 /**
