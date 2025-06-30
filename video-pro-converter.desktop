@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Video Pro Converter
+Comment=Convert videos to high-quality ProRes format
+Exec=/opt/Video Pro Converter/video-pro-converter
+Icon=/opt/Video Pro Converter/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Video;AudioVideo;Utility;
+Keywords=video;converter;prores;mov;mp4;
+StartupWMClass=Video Pro Converter
+MimeType=video/mp4;video/quicktime;video/x-msvideo;video/x-matroska;

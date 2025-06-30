@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP4 to MOV Converter</title>
+    <!-- Link to the stylesheet for application styling -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main container for the application interface -->
+    <div id="main-container">
+        <h1>MP4 to MOV Converter</h1>
+        <!-- Drop zone for drag and drop functionality -->
+        <div id="drop-zone">
+            <p>Drag and drop video(s) or folder here</p>
+        </div>
+        <!-- Separator text -->
+        <p class="separator">— or —</p>
+        <!-- Button to select a single video file -->
+        <button id="select-file-btn">Select Video File</button>
+        <!-- Button to select a folder containing video files -->
+        <button id="select-folder-btn">Select Folder</button>
+        <!-- Button to select the output folder -->
+        <button id="select-output-folder-btn">Select Output Folder</button>
+        <!-- Display for the selected output folder path -->
+        <p id="output-folder-path"></p>
+        
+        <!-- Quality Settings -->
+        <div class="setting-group">
+            <label for="quality-select">Output Quality:</label>
+            <select id="quality-select">
+                <option value="high">High (Best Quality, Large File)</option>
+                <option value="medium" selected>Medium (Good Quality, Balanced)</option>
+                <option value="low">Low (Lower Quality, Small File)</option>
+            </select>
+        </div>
+        <!-- Paragraph to display status messages to the user -->
+        <p id="status-message">Ready</p>
+    </div>
+
+    <!-- Link to the renderer process script, deferred until document is parsed -->
+    <script src="renderer.js"></script>
+</body>
+</html>

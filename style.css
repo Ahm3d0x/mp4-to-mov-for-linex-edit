@@ -1,0 +1,156 @@
+/* Basic reset for consistent styling across browsers */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling: dark theme, centered content */
+body {
+    font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+    background-color: #282c34; /* Dark background color */
+    color: #abb2bf; /* Light text color for contrast */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Prevent scrolling if content overflows */
+}
+
+/* Main container styling */
+#main-container {
+    background-color: #3e4451; /* Slightly lighter dark background for the container */
+    padding: 40px;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Subtle shadow for depth */
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally within the container */
+    gap: 20px; /* Space between elements */
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Maximum width for larger screens */
+}
+
+/* Heading styling */
+h1 {
+    color: #61afef; /* A vibrant blue for the heading */
+    margin-bottom: 20px;
+    font-size: 2.2em;
+}
+
+/* Drop zone styling */
+#drop-zone {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #61afef; /* Dashed border with vibrant blue */
+    border-radius: 8px; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.2em;
+    background-color: #3e4451; /* Same as container background */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+/* Drop zone drag-over effect */
+#drop-zone.drag-over {
+    border-color: #c678dd; /* Changes color on drag-over */
+    background-color: #4b5263; /* Changes background on drag-over */
+    transform: scale(1.02); /* Slightly enlarge */
+}
+
+/* Separator text styling */
+.separator {
+    color: #5c6370; /* Muted color for separator */
+    font-size: 1em;
+}
+
+/* Button styling */
+button {
+    background-color: #56b6c2; /* Teal-like color */
+    color: #282c34; /* Dark text on button */
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Button shadow */
+    width: 80%; /* Make buttons take more width */
+    max-width: 300px; /* Max width for buttons */
+}
+
+button:hover {
+    background-color: #61afef; /* Lighter blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: translateY(0); /* Press effect */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Status message styling */
+#status-message {
+    margin-top: 25px;
+    font-style: italic;
+    color: #98c379; /* Greenish color for success/ready messages */
+    font-size: 1.1em;
+}
+
+/* Output folder path display styling */
+#output-folder-path {
+    margin: 10px 0;
+    color: #abb2bf;
+    font-size: 14px;
+    min-height: 20px;
+    text-align: center;
+}
+
+/* Settings Group */
+.setting-group {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.setting-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #abb2bf;
+    font-size: 14px;
+}
+
+#quality-select {
+    background-color: #3e4451;
+    color: #abb2bf;
+    border: 1px solid #5c6370;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 300px;
+    max-width: 100%;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23abb2bf%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px auto;
+    padding-right: 30px;
+}
+
+#quality-select:focus {
+    outline: none;
+    border-color: #61afef;
+    box-shadow: 0 0 0 2px rgba(97, 175, 239, 0.3);
+}
+
+#quality-select option {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 8px 12px;
+}
