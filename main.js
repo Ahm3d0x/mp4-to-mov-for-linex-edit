@@ -35,7 +35,7 @@ function createWindow() {
   });
 
   // Load the index.html file into the main window
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('app.html');
 
   // Open the DevTools. This is useful for debugging.
   // mainWindow.webContents.openDevTools();
