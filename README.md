@@ -1,6 +1,6 @@
-You're asking for the raw Markdown content of the `README.md` file from the Canvas. Here it is:
 
-````markdown
+
+
 # MP4 to MOV Video Converter
 
 A powerful and user-friendly desktop application built with [Electron.js](https://www.electronjs.org/) for converting MP4 video files into the professional MOV format using the Apple ProRes codec. Specifically designed for video editors and content creators who need high-quality video conversion on Linux systems.
@@ -80,7 +80,7 @@ npm install
 
 # Build the application
 npm run dist
-````
+
 
 The built package will be in the `dist` directory.
 
