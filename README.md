@@ -35,8 +35,8 @@ A powerful and user-friendly desktop application built with Electron.js for conv
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Ahm3d0x/mp4-to-mov-converter.git
-   cd mp4-to-mov-converter
+   git clone https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit.git
+   cd mp4-to-mov-for-linex-edit
    ```
 
 2. Install dependencies:
@@ -98,7 +98,7 @@ npm run dist
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request to the [GitHub repository](https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit).
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -117,7 +117,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 📚 Major: Communications and Electronics Engineering  
 📍 From Kafr Saqr, El-Sharqia, Egypt  
 📧 Email: [ahm3d.m.attia@gmail.com](mailto:ahm3d.m.attia@gmail.com)  
-🔗 GitHub: [github.com/Ahm3d0x](https://github.com/Ahm3d0x)  
+🔗 GitHub: [Ahm3d0x/mp4-to-mov-for-linex-edit](https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit)  
 🔗 LinkedIn: [linkedin.com/in/ahmed-m-attia-757aa6292](https://www.linkedin.com/in/ahmed-m-attia-757aa6292/)
 
 ## 🙏 Acknowledgments
