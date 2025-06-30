@@ -145,11 +145,17 @@ This project is licensed under the MIT License - see the [LICENSE file](https://
 ## 👨‍💻 About the Developer
 
 👋 **Name:** Ahmed Mohamed Attia Mohamed
+
 🎓 **Education:** Student at Faculty of Engineering, Zagazig University
+
 📚 **Major:** Communications and Electronics Engineering
+
 📍 **Location:** From Kafr Saqr, El-Sharqia, Egypt
+
 📧 **Email:** [ahm3d.m.attia@gmail.com](mailto:ahm3d.m.attia@gmail.com)
+
 🔗 **GitHub:** [Ahm3d0x/mp4-to-mov-for-linex-edit](https://www.google.com/search?q=https://github.com/Ahm3d0x/mp4-to-mov-for-linex-edit)
+
 🔗 **LinkedIn:** [linkedin.com/in/ahmed-m-attia-757aa6292](https://www.google.com/search?q=https://www.linkedin.com/in/ahmed-m-attia-757aa6292)
 
 ### 🙏 Acknowledgments
