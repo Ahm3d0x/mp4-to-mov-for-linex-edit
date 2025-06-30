@@ -16,8 +16,8 @@ function createWindow() {
   // Create a new browser window with specific dimensions and properties
   const mainWindow = new BrowserWindow({
     width: 800, // Fixed width
-    height: 650, // Fixed height
-    title: 'Video Pro Converter', // New title
+    height: 900, // Fixed height
+    title: 'mp4 to mov Video Converter', // New title
     resizable: false, // Disable resizing to maintain a consistent UI
     webPreferences: {
       // Set up the preload script for secure communication between main and renderer processes

@@ -1,7 +1,7 @@
 {
-    "name": "video-pro-converter",
+    "name": "mp4-to-mov-converter",
     "version": "1.0.0",
-    "description": "Professional video converter with ProRes support - Convert MP4 to high-quality MOV format with customizable presets",
+    "description": "Professional MP4 to MOV Video Converter with ProRes support - Convert your videos with customizable quality presets",
     "main": "main.js",
     "scripts": {
       "start": "electron .",
@@ -32,7 +32,7 @@
     },
     "build": {
       "appId": "com.videopro.converter",
-      "productName": "Video Pro Converter",
+      "productName": "MP4 to MOV Video Converter",
       "linux": {
         "target": ["deb"],
         "icon": "assets/icon.png",
