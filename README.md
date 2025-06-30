@@ -80,11 +80,11 @@ npm install
 
 # Build the application
 npm run dist
-
+```
 
 The built package will be in the `dist` directory.
 
------
+
 
 ## 🎬 Usage
 
